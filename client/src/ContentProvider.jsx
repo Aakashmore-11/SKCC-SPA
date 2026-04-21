@@ -63,10 +63,12 @@ export const ContentProvider = ({ children }) => {
 
   const syncBackend = async (payload) => {
     try {
+      const token = localStorage.getItem('token');
       await fetch(`${API_URL}/api/content`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(payload)
       });
