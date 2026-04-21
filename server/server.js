@@ -170,12 +170,6 @@ app.get('/api/auth/verify', (req, res) => {
 // 4. Seed Root Admin (Internal)
 // Removed public seeding for security. Run manually if needed or restrict to localhost.
 
-const path = require('path');
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html')));
-}
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`SKCC Secure Core listening on port ${PORT}`));
 
