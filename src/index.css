@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-light: #3b82f6;
+  --color-primary: #1e40af;
+  --color-primary-dark: #2563eb;
+
+  --color-secondary-light: #fde047;
+  --color-secondary: #facc15;
+  --color-secondary-dark: #ca8a04;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-white bg-[#0A0A0F] font-sans;
+  }
+}
+
+.glass-nav {
+  @apply bg-[#0A0A0F]/80 backdrop-blur-xl border-b border-white/5;
+}
+
+.btn-primary {
+  @apply bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full font-bold text-sm tracking-wide transition-all duration-300 transform active:scale-95;
+}
+
+.btn-secondary {
+  @apply border border-white/20 hover:border-white/50 text-white px-8 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300 hover:bg-white/5;
+}
+
+.section-padding {
+  @apply py-24 px-6 max-w-7xl mx-auto;
+}
+
+.card-premium {
+  @apply bg-white/[0.03] backdrop-blur-md rounded-3xl border border-white/5 p-8 transition-all duration-300 hover:border-yellow-400/30 hover:bg-white/[0.05];
+}
+
+/* Custom animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+::selection {
+  @apply bg-yellow-400 text-black;
+}
