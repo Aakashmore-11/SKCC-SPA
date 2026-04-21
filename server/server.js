@@ -53,6 +53,7 @@ cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
 
 const storage = new CloudinaryStorage({
@@ -147,7 +148,7 @@ app.post('/api/admin/upload', authenticate, upload.single('image'), (req, res) =
     console.log('Upload Failed: No file received');
     return res.status(400).json({ message: 'No file received' });
   }
-  const imageUrl = req.file.path || req.file.url || req.file.secure_url;
+  const imageUrl = req.file.secure_url || req.file.path || req.file.url;
   console.log('Cloudinary Upload Success:', imageUrl);
   res.json({ url: imageUrl });
 });

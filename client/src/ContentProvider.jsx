@@ -11,6 +11,26 @@ export const ContentProvider = ({ children }) => {
   const [submissions, setSubmissions] = useState([]);
   const [cloudinaryConfig, setCloudinaryConfig] = useState({ cloudName: '', uploadPreset: '' });
 
+  const secureCloudinaryUrls = (data) => {
+    if (!data) return data;
+    try {
+      const str = JSON.stringify(data);
+      const secured = str.replace(/http:\/\/res\.cloudinary\.com/g, 'https://res.cloudinary.com');
+      return JSON.parse(secured);
+    } catch (e) {
+      return data;
+    }
+  };
+
+  const formatWhatsApp = (number) => {
+    if (!number) return '';
+    const digits = number.toString().replace(/\D/g, '');
+    if (digits.length === 10) return `91${digits}`;
+    return digits;
+  };
+
+  const getWhatsAppUrl = (number) => `https://wa.me/${formatWhatsApp(number)}`;
+
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   // Load from Storage or Backend on mount
@@ -25,11 +45,11 @@ export const ContentProvider = ({ children }) => {
       const savedSubmissions = localStorage.getItem('skcc_submissions');
       const savedCloudinary = localStorage.getItem('skcc_cloudinary');
 
-      if (savedInfo) setInstituteInfo(JSON.parse(savedInfo));
-      if (savedCourses) setCourses(JSON.parse(savedCourses));
-      if (savedStaff) setStaff(JSON.parse(savedStaff));
-      if (savedGallery) setGallery(JSON.parse(savedGallery));
-      if (savedToppers) setToppers(JSON.parse(savedToppers));
+      if (savedInfo) setInstituteInfo(secureCloudinaryUrls(JSON.parse(savedInfo)));
+      if (savedCourses) setCourses(secureCloudinaryUrls(JSON.parse(savedCourses)));
+      if (savedStaff) setStaff(secureCloudinaryUrls(JSON.parse(savedStaff)));
+      if (savedGallery) setGallery(secureCloudinaryUrls(JSON.parse(savedGallery)));
+      if (savedToppers) setToppers(secureCloudinaryUrls(JSON.parse(savedToppers)));
       if (savedSubmissions) setSubmissions(JSON.parse(savedSubmissions));
       if (savedCloudinary) setCloudinaryConfig(JSON.parse(savedCloudinary));
 
@@ -39,11 +59,11 @@ export const ContentProvider = ({ children }) => {
         if (res.ok) {
           const data = await res.json();
           if (data) {
-            if (data.instituteInfo && Object.keys(data.instituteInfo).length > 0) setInstituteInfo(data.instituteInfo);
-            if (data.courses && data.courses.length > 0) setCourses(data.courses);
-            if (data.staff && data.staff.length > 0) setStaff(data.staff);
-            if (data.gallery && data.gallery.length > 0) setGallery(data.gallery);
-            if (data.toppers && data.toppers.length > 0) setToppers(data.toppers);
+            if (data.instituteInfo && Object.keys(data.instituteInfo).length > 0) setInstituteInfo(secureCloudinaryUrls(data.instituteInfo));
+            if (data.courses && data.courses.length > 0) setCourses(secureCloudinaryUrls(data.courses));
+            if (data.staff && data.staff.length > 0) setStaff(secureCloudinaryUrls(data.staff));
+            if (data.gallery && data.gallery.length > 0) setGallery(secureCloudinaryUrls(data.gallery));
+            if (data.toppers && data.toppers.length > 0) setToppers(secureCloudinaryUrls(data.toppers));
             if (data.submissions && data.submissions.length > 0) setSubmissions(data.submissions);
             
             // Re-sync local storage
@@ -79,33 +99,38 @@ export const ContentProvider = ({ children }) => {
 
   // Update methods
   const updateInfo = (newInfo) => {
-    setInstituteInfo(newInfo);
-    try { localStorage.setItem('skcc_info', JSON.stringify(newInfo)); } catch (e) { console.warn("Storage Quota Exceeded"); }
-    syncBackend({ instituteInfo: newInfo });
+    const secured = secureCloudinaryUrls(newInfo);
+    setInstituteInfo(secured);
+    try { localStorage.setItem('skcc_info', JSON.stringify(secured)); } catch (e) { console.warn("Storage Quota Exceeded"); }
+    syncBackend({ instituteInfo: secured });
   };
 
   const updateCourses = (newCourses) => {
-    setCourses(newCourses);
-    try { localStorage.setItem('skcc_courses', JSON.stringify(newCourses)); } catch (e) { console.warn("Storage Quota Exceeded"); }
-    syncBackend({ courses: newCourses });
+    const secured = secureCloudinaryUrls(newCourses);
+    setCourses(secured);
+    try { localStorage.setItem('skcc_courses', JSON.stringify(secured)); } catch (e) { console.warn("Storage Quota Exceeded"); }
+    syncBackend({ courses: secured });
   };
 
   const updateStaff = (newStaff) => {
-    setStaff(newStaff);
-    try { localStorage.setItem('skcc_staff', JSON.stringify(newStaff)); } catch (e) { console.warn("Storage Quota Exceeded"); }
-    syncBackend({ staff: newStaff });
+    const secured = secureCloudinaryUrls(newStaff);
+    setStaff(secured);
+    try { localStorage.setItem('skcc_staff', JSON.stringify(secured)); } catch (e) { console.warn("Storage Quota Exceeded"); }
+    syncBackend({ staff: secured });
   };
 
   const updateGallery = (newGallery) => {
-    setGallery(newGallery);
-    try { localStorage.setItem('skcc_gallery', JSON.stringify(newGallery)); } catch (e) { console.warn("Storage Quota Exceeded"); }
-    syncBackend({ gallery: newGallery });
+    const secured = secureCloudinaryUrls(newGallery);
+    setGallery(secured);
+    try { localStorage.setItem('skcc_gallery', JSON.stringify(secured)); } catch (e) { console.warn("Storage Quota Exceeded"); }
+    syncBackend({ gallery: secured });
   };
 
   const updateToppers = (newToppers) => {
-    setToppers(newToppers);
-    try { localStorage.setItem('skcc_toppers', JSON.stringify(newToppers)); } catch (e) { console.warn("Storage Quota Exceeded"); }
-    syncBackend({ toppers: newToppers });
+    const secured = secureCloudinaryUrls(newToppers);
+    setToppers(secured);
+    try { localStorage.setItem('skcc_toppers', JSON.stringify(secured)); } catch (e) { console.warn("Storage Quota Exceeded"); }
+    syncBackend({ toppers: secured });
   };
 
   const updateSubmissions = (newSubmissions) => {
@@ -127,7 +152,8 @@ export const ContentProvider = ({ children }) => {
       gallery, updateGallery,
       toppers, updateToppers,
       submissions, updateSubmissions,
-      cloudinaryConfig, updateCloudinary
+      cloudinaryConfig, updateCloudinary,
+      getWhatsAppUrl
     }}>
       {children}
     </ContentContext.Provider>

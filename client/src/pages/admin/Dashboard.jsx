@@ -416,7 +416,9 @@ const AdminDashboard = () => {
                 <div className="relative group w-full h-64 rounded-[2.5rem] overflow-hidden border border-white/10 bg-white/5">
                   <img 
                     src={localInfo.heroImage || "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop"} 
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity"
+                    draggable="false"
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity select-none"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                     <label className="cursor-pointer bg-white text-black px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest flex items-center gap-2">
@@ -506,7 +508,7 @@ const AdminDashboard = () => {
                 {toppers.map((t) => (
                   <div key={t.id} className="bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] flex items-center gap-6 group">
                     <div className="relative group/img overflow-hidden rounded-2xl w-24 h-24 flex-shrink-0">
-                      <img src={t.image} className="w-full h-full object-cover transition-all duration-500" />
+                      <img src={t.image} draggable="false" onContextMenu={(e) => e.preventDefault()} className="w-full h-full object-cover transition-all duration-500 select-none" />
                       <label className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity cursor-pointer text-white">
                         <Camera className="w-5 h-5" />
                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, (url) => updateTopperData(t.id, 'image', url))} />
@@ -581,7 +583,7 @@ const AdminDashboard = () => {
               <div className="columns-1 md:columns-3 gap-6 space-y-6">
                 {gallery.map(img => (
                   <div key={img.id} className="group relative break-inside-avoid rounded-3xl overflow-hidden border border-white/5">
-                    <img src={img.url} className="w-full object-cover transition-all duration-500" />
+                    <img src={img.url} draggable="false" onContextMenu={(e) => e.preventDefault()} className="w-full object-cover transition-all duration-500 select-none" />
                     <div className="absolute top-4 left-4 bg-yellow-400 text-black px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                       {img.category || 'Event'}
                     </div>
@@ -666,7 +668,7 @@ const AdminDashboard = () => {
                 {staff.map((member, idx) => (
                   <div key={idx} className="bg-white/[0.03] border border-white/5 p-6 rounded-3xl flex items-center gap-8 group">
                     <div className="relative group/img overflow-hidden rounded-2xl">
-                      <img src={member.image} className="w-24 h-24 rounded-2xl object-cover transition-all duration-500" />
+                      <img src={member.image} draggable="false" onContextMenu={(e) => e.preventDefault()} className="w-24 h-24 rounded-2xl object-cover transition-all duration-500 select-none" />
                       <label className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity cursor-pointer">
                         <Camera className="w-6 h-6 text-white" />
                         <input 

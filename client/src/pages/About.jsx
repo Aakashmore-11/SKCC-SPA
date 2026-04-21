@@ -26,7 +26,9 @@ const About = () => {
           <img
             src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
             alt="Classroom"
-            className="w-full h-full object-cover"
+            draggable="false"
+            onContextMenu={(e) => e.preventDefault()}
+            className="w-full h-full object-cover select-none"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-[#0A0A0F]/40" />
         </div>
@@ -275,7 +277,9 @@ const About = () => {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    draggable="false"
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">

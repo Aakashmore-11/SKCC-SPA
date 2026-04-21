@@ -14,12 +14,12 @@ const fadeUp = {
 };
 
 const Contact = () => {
-  const { instituteInfo } = useContent();
+  const { instituteInfo, getWhatsAppUrl } = useContent();
 
   return (
     <div className="pt-32 pb-24 bg-[#0A0A0F]">
       <div className="max-w-7xl mx-auto px-6">
-
+ 
         {/* Header */}
         <div className="mb-20">
           <motion.p
@@ -28,7 +28,7 @@ const Contact = () => {
           >
             Connection
           </motion.p>
-
+ 
           <motion.h1
             variants={fadeUp} initial="hidden" animate="visible" custom={1}
             className="text-5xl md:text-7xl font-black text-white leading-tight mb-8"
@@ -38,7 +38,7 @@ const Contact = () => {
             <br />
             <span className="text-gray-600">Conversation.</span>
           </motion.h1>
-
+ 
           <motion.p
             variants={fadeUp} initial="hidden" animate="visible" custom={2}
             className="text-gray-400 text-lg max-w-xl"
@@ -46,7 +46,7 @@ const Contact = () => {
             We're here to answer every academic question you have. Reach out via your preferred channel.
           </motion.p>
         </div>
-
+ 
         {/* Info Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-20">
           {[
@@ -67,10 +67,10 @@ const Contact = () => {
             </motion.div>
           ))}
         </div>
-
+ 
         {/* Map + Contact */}
         <div className="flex flex-col lg:flex-row gap-8">
-
+ 
           {/* Map Section */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -86,10 +86,10 @@ const Contact = () => {
               allowFullScreen=""
               loading="lazy"
             ></iframe>
-
+ 
             <div className="absolute inset-0 pointer-events-none border-[12px] border-[#0A0A0F] rounded-[3rem]" />
           </motion.div>
-
+ 
           {/* Right Panel */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -98,18 +98,18 @@ const Contact = () => {
             className="lg:w-1/3 bg-white/[0.02] border border-white/5 rounded-[3rem] p-12 flex flex-col justify-center relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-400/5 blur-[100px] -mr-32 -mt-32" />
-
+ 
             <h2 className="text-3xl font-black text-white mb-6 leading-tight italic">
               Instant <br /> Responses.
             </h2>
-
+ 
             <p className="text-gray-500 mb-10 text-sm italic">
               Experience zero wait times. Chat with our enrollment team directly on WhatsApp for batch timings and fee structures.
             </p>
-
+ 
             <div className="space-y-4">
               <a
-                href={`https://wa.me/${instituteInfo.whatsapp}`}
+                href={getWhatsAppUrl(instituteInfo.whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-yellow-400 hover:bg-yellow-300 text-black py-5 rounded-2xl font-black flex items-center justify-center space-x-3 transition-all transform hover:scale-[1.02]"

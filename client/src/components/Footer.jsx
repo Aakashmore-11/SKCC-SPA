@@ -6,12 +6,12 @@ import { useContent } from '../ContentContext';
 import { navigation } from '../data/content';
 
 const Footer = () => {
-  const { instituteInfo } = useContent();
+  const { instituteInfo, getWhatsAppUrl } = useContent();
   return (
     <footer className="bg-[#0A0A0F] text-white pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
       {/* Glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/5 blur-[120px] pointer-events-none" />
-
+ 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="col-span-1 md:col-span-1">
@@ -31,7 +31,7 @@ const Footer = () => {
               <a href="https://www.instagram.com/shekhar_kumar_coaching_classes?igsh=Y2ZhZnlncG5haWF6" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition-all">
                 <FaInstagram className="w-4 h-4" />
               </a>
-              <a href={`https://wa.me/${instituteInfo.whatsapp}`} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition-all">
+              <a href={getWhatsAppUrl(instituteInfo.whatsapp)} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition-all">
                 <FaWhatsapp className="w-4 h-4" />
               </a>
             </div>

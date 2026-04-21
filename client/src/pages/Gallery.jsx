@@ -6,7 +6,6 @@ import { useContent } from '../ContentContext';
 const Gallery = () => {
   const { gallery, toppers } = useContent();
   const [filter, setFilter] = useState('All');
-  const [lightbox, setLightbox] = useState(null); // index into filteredGallery
 
   const categories = ['All', 'Event', 'Activity', 'Classroom'];
   const filteredGallery = filter === 'All'
@@ -21,12 +20,6 @@ const Gallery = () => {
       transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
     }),
   };
-
-  // Lightbox navigation
-  const openLightbox = (idx) => setLightbox(idx);
-  const closeLightbox = () => setLightbox(null);
-  const goNext = () => setLightbox((prev) => (prev + 1) % filteredGallery.length);
-  const goPrev = () => setLightbox((prev) => (prev - 1 + filteredGallery.length) % filteredGallery.length);
 
   return (
     <div className="min-h-screen pt-32 pb-24 bg-[#0A0A0F]">
@@ -86,8 +79,10 @@ const Gallery = () => {
                     <img
                       src={t.image}
                       alt={t.name}
+                      draggable="false"
+                      onContextMenu={(e) => e.preventDefault()}
                       onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1590650516494-23251a17dd0c?q=80&w=500&auto=format&fit=crop'; }}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none"
                     />
                     {/* Bottom gradient */}
                     <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -147,13 +142,14 @@ const Gallery = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4, delay: idx * 0.03 }}
-                  onClick={() => openLightbox(idx)}
-                  className="break-inside-avoid rounded-xl overflow-hidden cursor-pointer group"
+                  className="break-inside-avoid rounded-xl overflow-hidden group pointer-events-none"
                 >
                   <img
                     src={img.url}
                     alt="Gallery"
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    draggable="false"
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105 select-none"
                   />
                 </motion.div>
               ))}
@@ -168,61 +164,6 @@ const Gallery = () => {
           )}
         </section>
       </div>
-
-      {/* ── LIGHTBOX ── */}
-      <AnimatePresence>
-        {lightbox !== null && filteredGallery[lightbox] && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center"
-            onClick={closeLightbox}
-          >
-            {/* Close */}
-            <button
-              onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-10"
-            >
-              <X size={28} />
-            </button>
-
-            {/* Prev */}
-            <button
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
-              className="absolute left-4 md:left-8 text-white/40 hover:text-white transition-colors z-10 p-2"
-            >
-              <ChevronLeft size={36} />
-            </button>
-
-            {/* Image */}
-            <motion.img
-              key={lightbox}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              src={filteredGallery[lightbox].url}
-              alt="Gallery Full"
-              onClick={(e) => e.stopPropagation()}
-              className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg"
-            />
-
-            {/* Next */}
-            <button
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
-              className="absolute right-4 md:right-8 text-white/40 hover:text-white transition-colors z-10 p-2"
-            >
-              <ChevronRight size={36} />
-            </button>
-
-            {/* Counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-gray-500 text-xs font-bold">
-              {lightbox + 1} / {filteredGallery.length}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

@@ -17,6 +17,10 @@
   body {
     @apply antialiased text-white bg-[#0A0A0F] font-sans;
   }
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
 }
 
 .glass-nav {

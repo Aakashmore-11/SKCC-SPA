@@ -4,8 +4,8 @@ import aakash from "../assets/aakash.jpg";
 export const instituteInfo = {
   name: "Shekhar Kumar Coaching Classes",
   address: "1,2,3 Mayur Society, Surat",
-  contact: ["8849233878", "8866238407"],
-  whatsapp: "8849233878",
+  contact: ["918849233878", "918866238407"],
+  whatsapp: "918849233878",
   email: "shekharkumarcoaching@gmail.com",
 };
 

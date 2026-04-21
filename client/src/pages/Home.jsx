@@ -131,7 +131,9 @@ const Home = () => {
                 <img
                   src={instituteInfo.heroImage || heroImage}
                   alt="Shekhar Kumar Coaching Classes"
-                  className="w-full h-full object-cover"
+                  draggable="false"
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="w-full h-full object-cover select-none"
                 />
               </motion.div>
               <div className="absolute bottom-6 left-6 bg-black/80 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4">

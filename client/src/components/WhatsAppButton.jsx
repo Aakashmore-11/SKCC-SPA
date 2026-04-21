@@ -1,11 +1,13 @@
 import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { instituteInfo } from '../data/content';
+import { useContent } from '../ContentContext';
 
 const WhatsAppButton = () => {
+  const { instituteInfo, getWhatsAppUrl } = useContent();
+  
   return (
     <a
-      href={`https://wa.me/${instituteInfo.whatsapp}`}
+      href={getWhatsAppUrl(instituteInfo.whatsapp)}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-8 right-8 z-[150] bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:scale-110 transition-all duration-300 flex items-center justify-center group"
